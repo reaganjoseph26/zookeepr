@@ -57,6 +57,16 @@ function findById(id, animalsArray) {
     return result;
 }
 
+function createNewAnimal(body, animalsArray) {
+  const animal = body;
+  animalsArray.push(animal);
+  fs.writeFileSync(
+    path.join(__dirname, './data/animals.json'),
+    JSON.stringify({ animals: animalsArray }, null, 2)
+  );
+  return animal;
+}
+
 function validateAnimal(animal) {
   if (!animal.name || typeof animal.name !== 'string') {
     return false;
@@ -72,17 +82,6 @@ function validateAnimal(animal) {
   }
   return true;
 }
-
-function createNewAnimal(body, animalsArray) {
-  const animal = body;
-  animalsArray.push(animal);
-  fs.writeFileSync(
-    path.join(__dirname, './data/animals.json'),
-    JSON.stringify({ animals: animalsArray }, null, 2)
-  );
-  return animal;
-}
-
 
 app.get('/api/animals', (req, res) => {
       let results = animals
